@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -47,6 +48,15 @@ public class MainActivityFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+    public void updateweather()
+    {
+        String location=PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getString(getString(R.string.location),getString(R.string.defaultlocation));
+
+
+        new fetchweathertask().execute(location);
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater Inflater) {
@@ -54,6 +64,12 @@ public class MainActivityFragment extends Fragment {
         Inflater.inflate(R.menu.forecastfragment, menu);
 
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateweather();
     }
 
     @Override
@@ -65,7 +81,11 @@ public class MainActivityFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
-            new fetchweathertask().execute("18954");
+            String location=PreferenceManager.getDefaultSharedPreferences(getActivity())
+                    .getString(getString(R.string.location),getString(R.string.defaultlocation));
+
+
+            new fetchweathertask().execute(location);
             return true;
         }
 
@@ -78,13 +98,7 @@ public class MainActivityFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         String[] forecastarray = {
-                "Today-Sunny-80",
-                "Tommorow-Rainy-30",
-                "Wednesday-Cloudy-50",
-                "Thursday-Sunny-70",
-                "Friday-Rainy-20",
-                "Saturday-Snowy-10",
-                "Sunday-Sunny-100"
+
         };
         List<String> forecast = new ArrayList<String>(Arrays.asList(forecastarray));
        mForecastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, forecast);
