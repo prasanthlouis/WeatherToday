@@ -54,6 +54,7 @@ public class MainActivityFragment extends Fragment {
                 .getString(getString(R.string.location),getString(R.string.defaultlocation));
 
 
+
         new fetchweathertask().execute(location);
     }
 
@@ -134,6 +135,13 @@ public class MainActivityFragment extends Fragment {
      */
     private String formatHighLows(double high, double low) {
         // For presentation, assume the user doesn't care about tenths of a degree.
+        String units=PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getString(getString(R.string.temp),getString(R.string.defaulttemp));
+        if(units.equals(getString(R.string.metric)))
+        {
+            high=(high*1.8)+32;
+            low=(low*1.8)+32;
+        }
         long roundedHigh = Math.round(high);
         long roundedLow = Math.round(low);
 

@@ -12,5 +12,8 @@
     <ListPreference
         android:title="@string/temp_unit"
         android:key="@string/temp"
+        android:defaultValue="@string/metric"
+        android:entryValues="@array/pmv"
+        android:entries="@array/pmv"
         ></ListPreference>
 </PreferenceScreen>

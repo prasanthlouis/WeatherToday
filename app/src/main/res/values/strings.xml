@@ -10,5 +10,12 @@
     <string name="defaultlocation">18923</string>
     <string name="temp_unit">Temperature Unit</string>
     <string name="temp">Temperature</string>
-    <string name="defaulttemp">C</string>
+    <string name="defaulttemp">Celcius</string>
+    <string name="metric">Farenheit</string>
+    <string name="action_share">Share</string>
+    <string-array name="pmv">
+        <item>Celcius</item>
+        <item>Farenheit</item>
+    </string-array>
+
 </resources>
