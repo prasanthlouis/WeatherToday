@@ -1,4 +1,4 @@
-package com.psiuol21.prasanth.weathertoday;
+package com.psiuol21.prasanth.weatherforecast;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
