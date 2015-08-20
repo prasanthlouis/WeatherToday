@@ -1,6 +1,21 @@
 <resources>
-    <string name="app_name">WeatherForecast</string>
+    <string name="app_name">WeatherToday</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="refresh">Refresh</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="title_activity_detailed">DetailedActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="location_zip">Location Zip Code</string>
+    <string name="location">Location</string>
+    <string name="defaultlocation">18923</string>
+    <string name="temp_unit">Temperature Unit</string>
+    <string name="temp">Temperature</string>
+    <string name="defaulttemp">Celcius</string>
+    <string name="metric">Farenheit</string>
+    <string name="action_share">Share</string>
+    <string-array name="pmv">
+        <item>Celcius</item>
+        <item>Farenheit</item>
+    </string-array>
+
 </resources>
