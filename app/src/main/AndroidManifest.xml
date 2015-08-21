@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.psiuol21.prasanth.weathertoday" >
+    package="com.psiuol21.prasanth.weatherforecast" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -19,12 +19,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailedActivity"
-            android:label="@string/title_activity_detailed" >
-        </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:name=".DetailActivity"
+            android:label="@string/title_activity_detail" >
         </activity>
     </application>
 
