@@ -1,9 +1,11 @@
 package com.psiuol21.prasanth.weatherforecast;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -56,8 +58,7 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FetchWeatherTask fwt = new FetchWeatherTask();
-        fwt.execute("18954");
+       updateweather();
     }
 
     @Override
@@ -69,13 +70,21 @@ public class MainActivityFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
-            FetchWeatherTask fwt = new FetchWeatherTask();
-            fwt.execute("18954");
+           updateweather();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void updateweather() {
+        FetchWeatherTask fwt = new FetchWeatherTask();
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String value=sharedPrefs.getString("Location","18943");
+        fwt.execute(value);
+    }
+
+
 
 
     @Override
@@ -198,9 +207,17 @@ public class MainActivityFragment extends Fragment {
 
         private String formatHighLows(double high, double low) {
 
+
+
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String value=sharedPrefs.getString("Units","Metric");
+            if(value.equals("Imperial"))
+            {
+                high=(high*1.8)+32;
+                low=(low*1.8)+32;
+            }
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
-
             String highLowStr = roundedHigh + "/" + roundedLow;
             return highLowStr;
         }
