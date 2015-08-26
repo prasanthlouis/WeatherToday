@@ -1,8 +1,11 @@
 package com.psiuol21.prasanth.weatherforecast;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -36,7 +39,22 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
+        if(id== R.id.action_map)
+        {
+            openLocationInMap();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openLocationInMap() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String value=sharedPrefs.getString("Location", "18943");
+        Uri geolocation=Uri.parse("geo:0,0?").buildUpon()
+                .appendQueryParameter("q",value).build();
+        Intent i=new Intent(Intent.ACTION_VIEW);
+        i.setData(geolocation);
+        if (i.resolveActivity(getPackageManager()) != null)
+            startActivity(i);
     }
 }

@@ -23,7 +23,7 @@ public class DetailActivityFragment extends Fragment {
         String forecast=getActivity().getIntent().getStringExtra("Forecast");
         TextView tv=(TextView)view.findViewById(R.id.TextView1);
         tv.setText(forecast);
-
+// TODO Check if this works
         return view;
     }
 }
