@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 
 /**
@@ -39,8 +38,8 @@ public static final String Log_tag=DetailActivityFragment.class.getSimpleName();
         View view= inflater.inflate(R.layout.fragment_detail, container, false);
         String forecast=getActivity().getIntent().getStringExtra("Forecast");
         mForecast=forecast;
-        TextView tv=(TextView)view.findViewById(R.id.TextView1);
-        tv.setText(mForecast);
+
+
 // TODO Check if this works
         return view;
     }

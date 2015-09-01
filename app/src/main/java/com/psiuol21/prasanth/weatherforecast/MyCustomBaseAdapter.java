@@ -50,6 +50,7 @@ public class MyCustomBaseAdapter extends BaseAdapter {
             holder.iv=(ImageView)convertView.findViewById(R.id.list_item_icon);
 
 
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
