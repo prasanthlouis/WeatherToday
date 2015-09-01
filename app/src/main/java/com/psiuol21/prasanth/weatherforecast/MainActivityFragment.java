@@ -37,14 +37,20 @@ import java.util.ArrayList;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
+    MyCustomBaseAdapter mcb;
     ArrayAdapter<String> listAdapter;
+    ArrayList<SearchResults> searchResults;
+    ListView lv;
+    ArrayList<SearchResults> results = new ArrayList<SearchResults>();
     public MainActivityFragment() {
 
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
     }
 
@@ -59,7 +65,25 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-       updateweather();
+        results.clear();
+        updateweather();
+        Log.v("Mainact", "Started");
+        searchResults=results;
+
+         mcb=new MyCustomBaseAdapter(getActivity(), searchResults);
+
+
+        lv.setAdapter(mcb);
+
+
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -70,10 +94,6 @@ public class MainActivityFragment extends Fragment {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_refresh) {
-           updateweather();
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -81,8 +101,9 @@ public class MainActivityFragment extends Fragment {
     private void updateweather() {
         FetchWeatherTask fwt = new FetchWeatherTask();
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String value=sharedPrefs.getString("Location","18943");
+        String value=sharedPrefs.getString("Location", "18943");
         fwt.execute(value);
+
     }
 
 
@@ -101,21 +122,38 @@ public class MainActivityFragment extends Fragment {
         fakedata.add("Saturday-Sunny- 60/20");
         fakedata.add("Sunday-Sunny- 60/20");
         listAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, fakedata);
-        ListView lv = (ListView) view.findViewById(R.id.listview_forecast);
-        lv.setAdapter(listAdapter);
+        lv = (ListView) view.findViewById(R.id.listview_forecast);
+        Log.v("Mainact","Created");
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String forecast=listAdapter.getItem(position);
-                Intent intent=new Intent(getActivity(),DetailActivity.class);
+                String forecast = listAdapter.getItem(position);
+
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("Forecast",forecast);
                 startActivity(intent);
-
             }
         });
 
 
+
+
+
         return view;
+    }
+    private void GetSearchResults(String day,String weather,String high,String low) {
+
+
+        SearchResults sr = new SearchResults();
+        sr.setDate(day);
+        sr.setWeather(weather);
+        sr.setHigh(high);
+        sr.setLow(low);
+        results.add(sr);
+        mcb.notifyDataSetChanged();
+
+
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
@@ -228,9 +266,17 @@ public class MainActivityFragment extends Fragment {
         protected void onPostExecute(String[] strings) {
             super.onPostExecute(strings);
             listAdapter.clear();
-            for(String x:strings)
-            listAdapter.add(x);
+            for (String x:strings) {
+                listAdapter.add(x);
+            String s[]=x.split(" ");
+                String s1[]=s[6].split("/");
+             GetSearchResults(s[0]+" "+s[1]+" "+s[2],s[4],s1[0],s1[1]);
 
+
+
+
+
+            }
         }
 
         private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
